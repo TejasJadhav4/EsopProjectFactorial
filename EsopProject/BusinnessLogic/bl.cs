@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web;
 
 namespace EsopProject.BusinnessLogic
 {
@@ -15,26 +16,13 @@ namespace EsopProject.BusinnessLogic
             {
                 Output = Output * i;
             }
-            int a = 1;
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "some\\DataFile.txt");
-            string startupPath = System.IO.Directory.GetCurrentDirectory();
-            if (File.Exists("DataFile.txt"))
+            string pathToFiles = HttpContext.Current.Server.MapPath("/App_Data") + @"\DataFile.txt";
+            pathToFiles = pathToFiles.Replace(@"\\", @"/");
+            pathToFiles = pathToFiles.Replace(@"\", @"/");
+            if (File.Exists(pathToFiles))
             {
-                File.AppendAllText(@"..\Files\DataFile.txt", "" + DateTime.Now + "Factorial of Number " + InputNumber + " = " + Output + Environment.NewLine);
+                File.AppendAllText(pathToFiles, "" + DateTime.Now + "- Factorial of Number " + InputNumber + " = " + Output + Environment.NewLine);
             }
-            //File.AppendAllText(
-            //"FileAppendAllText.txt",
-            //"line1" + Environment.NewLine +
-            //"line2" + Environment.NewLine +
-            //"line3" + Environment.NewLine);
-
-            //using (StreamWriter stream = File.AppendText("FileAppendText.txt"))
-            //{
-            //    stream.WriteLine("line1");
-            //    stream.WriteLine("line2");
-            //    stream.WriteLine("line3");
-            //}
-
             return Output;
         }
     }
