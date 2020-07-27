@@ -1,0 +1,40 @@
+﻿   <h2 style="color:green">I am here to calculate the factorial!!!!!</h2>
+    <br />
+    <label>Please input the number: </label>
+    <input type="number" name="InputNumber" id="InputNumber" /> <input type="button" value="Calculate" id="Calculate" onclick="Calculate()"/>
+    <br />
+    <br />
+    <br />
+    <label style="color:black" id="FactorialText"></label> <label style="color:blue" id="Answer"></label>
+
+<script>
+    function Calculate() {
+        var InputNumber = $("#InputNumber").val();
+        debugger;
+        if (InputNumber > 0) {
+            $.ajax({
+                type: "POST",
+                url: '/Home/Calculate',
+                data: { InputNumber: InputNumber },
+                success: function (data) {
+                    $("#FactorialText").text('Factorial of Number '+InputNumber+' = ');
+                    $("#Answer").text(data.Output);
+                    $("#InputNumber").val("");
+                    $("#InputNumber").focus();
+                }
+            });
+        }
+        else {
+            alert("Please input Valid Number.");
+            $("#InputNumber").focus();
+        }
+    }
+
+    $(document).ready(function() {
+        $('#InputNumber').keypress(function(e){
+            if (e.which === 13)
+                alert();
+              $('#Calculate').click();
+        });
+    });
+</script>
